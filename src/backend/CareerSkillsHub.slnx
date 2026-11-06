@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CareerSkillsHub.Api/CareerSkillsHub.Api.csproj" />
+    <Project Path="src/CareerSkillsHub.Application.Contracts/CareerSkillsHub.Application.Contracts.csproj" />
+    <Project Path="src/CareerSkillsHub.Application/CareerSkillsHub.Application.csproj" />
+    <Project Path="src/CareerSkillsHub.Domain/CareerSkillsHub.Domain.csproj" />
+    <Project Path="src/CareerSkillsHub.Infrastructure/CareerSkillsHub.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CareerSkillsHub.Api.IntegrationTests/CareerSkillsHub.Api.IntegrationTests.csproj" />
+    <Project Path="tests/CareerSkillsHub.Application.Tests/CareerSkillsHub.Application.Tests.csproj" />
+  </Folder>
+</Solution>

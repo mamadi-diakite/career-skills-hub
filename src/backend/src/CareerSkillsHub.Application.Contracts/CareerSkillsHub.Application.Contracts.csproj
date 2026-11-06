@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\CareerSkillsHub.Domain\CareerSkillsHub.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
