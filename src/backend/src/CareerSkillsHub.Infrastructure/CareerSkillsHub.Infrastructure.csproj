@@ -4,4 +4,8 @@
     <ProjectReference Include="..\CareerSkillsHub.Application\CareerSkillsHub.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.*" />
+  </ItemGroup>
+
 </Project>
