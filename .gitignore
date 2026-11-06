@@ -1,0 +1,44 @@
+# OS and editors
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
+*.suo
+*.user
+*.swp
+
+# Secrets and local settings
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+*.pfx
+*.pem
+*.key
+
+# .NET
+bin/
+obj/
+TestResults/
+*.trx
+coverage*/
+.coverage/
+
+# Local data (database, uploaded and signed files)
+App_Data/
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+out-tsc/
+npm-debug.log*
+
+# Logs
+logs/
+*.log
