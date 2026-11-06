@@ -1,3 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@layer components {
+  .form-card {
+    @apply mx-auto w-full max-w-md space-y-6 rounded-xl border border-slate-200 bg-white p-8 shadow-sm;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-slate-700;
+  }
+
+  .form-input {
+    @apply mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 focus:outline-none disabled:bg-slate-100 disabled:text-slate-600;
+  }
+
+  .button-primary {
+    @apply w-full rounded-md bg-teal-700 px-4 py-2 font-medium text-white hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .alert-error {
+    @apply rounded-md bg-rose-50 px-4 py-3 text-sm text-rose-700;
+  }
+
+  .alert-info {
+    @apply rounded-md bg-sky-50 px-4 py-3 text-sm text-sky-800;
+  }
+}

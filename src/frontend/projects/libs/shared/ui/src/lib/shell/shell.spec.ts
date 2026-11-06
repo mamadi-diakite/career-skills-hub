@@ -7,7 +7,8 @@ import { Shell } from './shell';
 @Component({
   imports: [Shell],
   template: `<csh-shell appName="Career Skills Hub" [apiStatus]="status()"
-    ><p>Page content</p></csh-shell
+    ><a shellNav href="/login">Log in</a>
+    <p>Page content</p></csh-shell
   >`,
 })
 class Host {
@@ -28,6 +29,7 @@ describe('Shell', () => {
     expect(home?.textContent?.trim()).toBe('Career Skills Hub');
     expect(home?.getAttribute('href')).toBe('/');
     expect(element.querySelector('main p')?.textContent).toBe('Page content');
+    expect(element.querySelector('header nav a')?.textContent).toBe('Log in');
   });
 
   it.each([

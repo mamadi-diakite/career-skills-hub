@@ -14,15 +14,21 @@ const statusDots: Record<ApiStatus, string> = {
   offline: 'bg-rose-500',
 };
 
-/** Page frame: header with the app name, the routed content, and a footer with the API status. */
+/**
+ * Page frame: header with the app name and the `shellNav` content, the routed content, and a
+ * footer with the API status.
+ */
 @Component({
   selector: 'csh-shell',
   imports: [RouterLink],
   template: `
     <div class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
       <header class="border-b border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-5xl items-center px-4 py-3">
+        <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <a routerLink="/" class="text-lg font-semibold tracking-tight">{{ appName() }}</a>
+          <nav class="flex flex-wrap items-center gap-4 text-sm" aria-label="Main">
+            <ng-content select="[shellNav]" />
+          </nav>
         </div>
       </header>
 
