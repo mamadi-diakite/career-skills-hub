@@ -11,6 +11,17 @@ public sealed class DependencyInjectionTests
     }
 
     [Fact]
+    public void Registers_the_repositories_and_the_password_hasher()
+    {
+        using var provider = new ServiceCollection().AddInfrastructure("Data Source=:memory:").BuildServiceProvider();
+        using var scope = provider.CreateScope();
+
+        Assert.IsType<UserRepository>(scope.ServiceProvider.GetRequiredService<IUserRepository>());
+        Assert.IsType<IdentityPasswordHasher>(provider.GetRequiredService<IPasswordHasher>());
+        Assert.Same(TimeProvider.System, provider.GetRequiredService<TimeProvider>());
+    }
+
+    [Fact]
     public async Task Creates_missing_data_folder_and_applies_migrations()
     {
         var root = Path.Combine(Path.GetTempPath(), "career-skills-hub-tests", Guid.NewGuid().ToString("N"));
@@ -34,6 +45,23 @@ public sealed class DependencyInjectionTests
             SqliteConnection.ClearAllPools();
             Directory.Delete(root, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task Seeds_demo_data_once_through_the_service_provider()
+    {
+        await using var provider = new ServiceCollection()
+            .AddInfrastructure("Data Source=seed-test;Mode=Memory;Cache=Shared")
+            .BuildServiceProvider();
+
+        // Keeps the shared in-memory database alive between scopes.
+        await using var keepAlive = new SqliteConnection("Data Source=seed-test;Mode=Memory;Cache=Shared");
+        await keepAlive.OpenAsync();
+
+        await provider.ApplyMigrationsAsync();
+
+        Assert.True(await provider.SeedDemoDataAsync());
+        Assert.False(await provider.SeedDemoDataAsync());
     }
 
     [Theory]

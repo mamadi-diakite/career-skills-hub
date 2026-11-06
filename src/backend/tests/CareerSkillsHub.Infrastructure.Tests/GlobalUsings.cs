@@ -1,5 +1,9 @@
+global using CareerSkillsHub.Application.Security;
+global using CareerSkillsHub.Application.Users;
 global using CareerSkillsHub.Domain;
 global using CareerSkillsHub.Infrastructure.Persistence;
+global using CareerSkillsHub.Infrastructure.Security;
+global using CareerSkillsHub.Infrastructure.Seeding;
 global using Microsoft.Data.Sqlite;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;

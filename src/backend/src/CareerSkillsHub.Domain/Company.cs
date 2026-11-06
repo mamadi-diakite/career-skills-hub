@@ -26,4 +26,11 @@ public sealed class Company
     public int Headcount { get; private set; }
 
     public DateTime CreatedAtUtc { get; private set; }
+
+    public void UpdateProfile(string name, int headcount)
+    {
+        var newName = Guard.Required(name, nameof(name), NameMaxLength);
+        Headcount = Guard.Range(headcount, nameof(headcount), 1, MaxHeadcount);
+        Name = newName;
+    }
 }

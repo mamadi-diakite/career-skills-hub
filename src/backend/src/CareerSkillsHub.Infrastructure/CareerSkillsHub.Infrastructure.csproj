@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.*" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.*" />
   </ItemGroup>
 
 </Project>

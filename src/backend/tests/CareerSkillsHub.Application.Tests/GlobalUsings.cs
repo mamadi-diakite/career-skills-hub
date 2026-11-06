@@ -1,0 +1,10 @@
+global using CareerSkillsHub.Application.Access;
+global using CareerSkillsHub.Application.Auth;
+global using CareerSkillsHub.Application.Companies;
+global using CareerSkillsHub.Application.Contracts.Auth;
+global using CareerSkillsHub.Application.Contracts.Companies;
+global using CareerSkillsHub.Application.Security;
+global using CareerSkillsHub.Application.Users;
+global using CareerSkillsHub.Domain;
+global using Microsoft.Extensions.DependencyInjection;
+global using Xunit;

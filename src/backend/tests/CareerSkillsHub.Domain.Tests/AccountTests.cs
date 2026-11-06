@@ -35,6 +35,26 @@ public sealed class AccountTests
     }
 
     [Fact]
+    public void Company_profile_can_be_updated()
+    {
+        var company = new Company("Blue Harbour", 10, TestDates.Now);
+
+        company.UpdateProfile(" Blue Harbour Logistics ", 64);
+
+        Assert.Equal(("Blue Harbour Logistics", 64), (company.Name, company.Headcount));
+    }
+
+    [Fact]
+    public void Invalid_profile_leaves_the_company_unchanged()
+    {
+        var company = new Company("Blue Harbour", 10, TestDates.Now);
+
+        Assert.Equal("name", Assert.Throws<ArgumentException>(() => company.UpdateProfile(" ", 64)).ParamName);
+        Assert.Equal("headcount", Assert.Throws<ArgumentOutOfRangeException>(() => company.UpdateProfile("Blue", 0)).ParamName);
+        Assert.Equal(("Blue Harbour", 10), (company.Name, company.Headcount));
+    }
+
+    [Fact]
     public void Creates_an_hr_admin_without_employee_record()
     {
         var user = new User(CompanyId, " Claire.Fontaine@Example.com ", " Claire Fontaine ", "hash", UserRole.HrAdmin, null, TestDates.Now);
@@ -67,6 +87,26 @@ public sealed class AccountTests
             () => new User(CompanyId, "a@example.com", "A", "hash", role, null, TestDates.Now));
 
         Assert.Equal("employeeId", error.ParamName);
+    }
+
+    [Fact]
+    public void Password_can_be_changed()
+    {
+        var user = new User(CompanyId, "a@example.com", "A", "old-hash", UserRole.HrAdmin, null, TestDates.Now);
+
+        user.ChangePassword("new-hash");
+
+        Assert.Equal("new-hash", user.PasswordHash);
+        Assert.Throws<ArgumentException>(() => user.ChangePassword(" "));
+    }
+
+    [Theory]
+    [InlineData("claire@example.com", true)]
+    [InlineData("claire@", false)]
+    [InlineData("", false)]
+    public void Checks_an_email_before_creating_a_user(string email, bool expected)
+    {
+        Assert.Equal(expected, User.IsValidEmail(email));
     }
 
     [Fact]

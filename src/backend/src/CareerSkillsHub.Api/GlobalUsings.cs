@@ -1,2 +1,14 @@
+global using System.Security.Claims;
+global using CareerSkillsHub.Api.Auth;
+global using CareerSkillsHub.Application;
+global using CareerSkillsHub.Application.Auth;
+global using CareerSkillsHub.Application.Companies;
+global using CareerSkillsHub.Application.Contracts.Auth;
+global using CareerSkillsHub.Application.Contracts.Companies;
+global using CareerSkillsHub.Domain;
 global using CareerSkillsHub.Infrastructure;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.IdentityModel.JsonWebTokens;
+global using Microsoft.IdentityModel.Tokens;
