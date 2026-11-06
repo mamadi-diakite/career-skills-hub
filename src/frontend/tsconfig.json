@@ -1,0 +1,36 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "paths": {
+      "@career-skills-hub/shared/environment": ["./projects/libs/shared/environment/src/index.ts"],
+      "@career-skills-hub/shared/core": ["./projects/libs/shared/core/src/index.ts"],
+      "@career-skills-hub/shared/ui": ["./projects/libs/shared/ui/src/index.ts"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/apps/career-skills-hub-app/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/apps/career-skills-hub-app/tsconfig.spec.json"
+    }
+  ]
+}
