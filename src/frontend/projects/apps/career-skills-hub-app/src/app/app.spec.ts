@@ -35,7 +35,14 @@ describe('App', () => {
   it('logs out to the login page', async () => {
     app.signIn();
     await app.open('/');
-    expect(app.texts('header nav a')).toEqual(['Company', 'Change password']);
+    expect(app.texts('header nav a')).toEqual([
+      'Employees',
+      'Jobs',
+      'Skills',
+      'Departments',
+      'Company',
+      'Change password',
+    ]);
 
     await app.click('header nav button');
 

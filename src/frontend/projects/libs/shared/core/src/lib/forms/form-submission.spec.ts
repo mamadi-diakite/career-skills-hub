@@ -103,4 +103,18 @@ describe('FormSubmission', () => {
     submission.submit(() => of('sent'), vi.fn());
     expect(submission.messagesFor('email')).toEqual([]);
   });
+
+  it('reads server messages under the name the API uses', () => {
+    const { form, submission } = setUp();
+    form.setValue({ email: 'claire@example.com' });
+    const error = new HttpErrorResponse({
+      status: 400,
+      error: { errors: { 'contact.email': ['Taken.'] } },
+    });
+
+    submission.submit(() => throwError(() => error), vi.fn());
+
+    expect(submission.messagesFor('email', 'contact.email')).toEqual(['Taken.']);
+    expect(submission.messagesFor('email')).toEqual([]);
+  });
 });

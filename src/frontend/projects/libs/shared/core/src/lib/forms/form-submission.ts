@@ -47,9 +47,12 @@ export class FormSubmission {
     private readonly invalidMessages: Readonly<Record<string, string>>,
   ) {}
 
-  /** Server messages for a field, or its client-side message once the user has left it invalid. */
-  messagesFor(field: string): readonly string[] {
-    const server = this.errors().fields[field];
+  /**
+   * Server messages for a field, or its client-side message once the user has left it invalid.
+   * `apiField` is the name the API uses when it differs, e.g. `levels.beginner`.
+   */
+  messagesFor(field: string, apiField = field): readonly string[] {
+    const server = this.errors().fields[apiField];
     if (server) {
       return server;
     }

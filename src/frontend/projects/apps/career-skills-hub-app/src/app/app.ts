@@ -4,16 +4,10 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import {
   ApiHealthService,
   AuthService,
+  roleLabel,
   SessionStore,
-  UserRole,
 } from '@career-skills-hub/shared/core';
 import { Shell } from '@career-skills-hub/shared/ui';
-
-const roleLabels: Record<UserRole, string> = {
-  HrAdmin: 'HR admin',
-  Manager: 'Manager',
-  Employee: 'Employee',
-};
 
 @Component({
   selector: 'csh-root',
@@ -22,10 +16,14 @@ const roleLabels: Record<UserRole, string> = {
     <csh-shell appName="Career Skills Hub" [apiStatus]="apiStatus()">
       <ng-container shellNav>
         @if (user(); as user) {
+          <a routerLink="/employees" class="text-teal-700">Employees</a>
+          <a routerLink="/jobs" class="text-teal-700">Jobs</a>
+          <a routerLink="/skills" class="text-teal-700">Skills</a>
+          <a routerLink="/departments" class="text-teal-700">Departments</a>
           <a routerLink="/company" class="text-teal-700">Company</a>
           <a routerLink="/account/password" class="text-teal-700">Change password</a>
           <span class="text-slate-600" data-testid="user-name"
-            >{{ user.displayName }} · {{ roleLabels[user.role] }}</span
+            >{{ user.displayName }} · {{ roleLabel(user.role) }}</span
           >
           <button type="button" class="text-teal-700" (click)="logOut()">Log out</button>
         } @else {
@@ -42,7 +40,7 @@ export class App {
   private readonly router = inject(Router);
   private readonly session = inject(SessionStore);
 
-  protected readonly roleLabels = roleLabels;
+  protected readonly roleLabel = roleLabel;
   protected readonly user = this.session.user;
   protected readonly apiStatus = toSignal(inject(ApiHealthService).check(), {
     initialValue: 'checking',
