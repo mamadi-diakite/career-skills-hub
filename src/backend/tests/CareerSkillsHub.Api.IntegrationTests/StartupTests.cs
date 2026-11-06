@@ -42,3 +42,16 @@ public sealed class MissingSigningKeyStartupTests
         Assert.Contains("Jwt:SigningKey is missing", error.Message);
     }
 }
+
+public sealed class MissingConnectionStringStartupTests
+{
+    [Fact]
+    public void Startup_without_a_connection_string_fails()
+    {
+        using var factory = new MissingConnectionStringApiFactory();
+
+        var error = Assert.Throws<InvalidOperationException>(() => factory.CreateClient());
+
+        Assert.Equal("Connection string 'Default' is missing.", error.Message);
+    }
+}
