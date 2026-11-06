@@ -1,3 +1,5 @@
+global using CareerSkillsHub.Application.Employees;
+global using CareerSkillsHub.Application.Organisation;
 global using CareerSkillsHub.Application.Security;
 global using CareerSkillsHub.Application.Users;
 global using CareerSkillsHub.Domain;

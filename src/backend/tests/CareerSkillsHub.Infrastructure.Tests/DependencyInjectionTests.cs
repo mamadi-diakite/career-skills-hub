@@ -17,6 +17,8 @@ public sealed class DependencyInjectionTests
         using var scope = provider.CreateScope();
 
         Assert.IsType<UserRepository>(scope.ServiceProvider.GetRequiredService<IUserRepository>());
+        Assert.IsType<OrganisationRepository>(scope.ServiceProvider.GetRequiredService<IOrganisationRepository>());
+        Assert.IsType<EmployeeRepository>(scope.ServiceProvider.GetRequiredService<IEmployeeRepository>());
         Assert.IsType<IdentityPasswordHasher>(provider.GetRequiredService<IPasswordHasher>());
         Assert.Same(TimeProvider.System, provider.GetRequiredService<TimeProvider>());
     }
@@ -39,6 +41,7 @@ public sealed class DependencyInjectionTests
             await using var scope = provider.CreateAsyncScope();
             var db = scope.ServiceProvider.GetRequiredService<CareerSkillsHubDbContext>();
             Assert.Empty(await db.Database.GetPendingMigrationsAsync());
+            Assert.False(db.Database.HasPendingModelChanges());
         }
         finally
         {

@@ -6,14 +6,10 @@ namespace CareerSkillsHub.Api.Controllers;
 public sealed class CompanyController(CompanyService companyService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<CompanyResponse>> Get(CancellationToken cancellationToken) =>
-        User.GetUserId() is { } userId
-            ? this.ToActionResult(await companyService.GetAsync(userId, cancellationToken))
-            : Unauthorized();
+    public Task<ActionResult> Get(CancellationToken cancellationToken) =>
+        this.ForUserAsync(userId => companyService.GetAsync(userId, cancellationToken));
 
     [HttpPut]
-    public async Task<ActionResult<CompanyResponse>> Update(UpdateCompanyRequest request, CancellationToken cancellationToken) =>
-        User.GetUserId() is { } userId
-            ? this.ToActionResult(await companyService.UpdateAsync(userId, request, cancellationToken))
-            : Unauthorized();
+    public Task<ActionResult> Update(UpdateCompanyRequest request, CancellationToken cancellationToken) =>
+        this.ForUserAsync(userId => companyService.UpdateAsync(userId, request, cancellationToken));
 }

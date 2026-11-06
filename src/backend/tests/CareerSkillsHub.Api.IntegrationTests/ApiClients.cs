@@ -30,4 +30,15 @@ internal static class ApiClients
 
         return client;
     }
+
+    /// <summary>Checks the status code and reads the JSON body.</summary>
+    public static async Task<T> ReadAsync<T>(this Task<HttpResponseMessage> request, HttpStatusCode expected = HttpStatusCode.OK)
+    {
+        var response = await request;
+        Assert.Equal(expected, response.StatusCode);
+
+        return (await response.Content.ReadFromJsonAsync<T>())!;
+    }
+
+    public static async Task<HttpStatusCode> StatusAsync(this Task<HttpResponseMessage> request) => (await request).StatusCode;
 }

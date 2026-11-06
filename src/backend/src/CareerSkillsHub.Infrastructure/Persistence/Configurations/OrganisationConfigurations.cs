@@ -76,6 +76,7 @@ internal sealed class SkillConfiguration : IEntityTypeConfiguration<Skill>
         builder.Property(s => s.AdvancedDescription).HasMaxLength(Skill.LevelDescriptionMaxLength).IsRequired();
         builder.Property(s => s.ExpertDescription).HasMaxLength(Skill.LevelDescriptionMaxLength).IsRequired();
         builder.HasIndex(s => new { s.CompanyId, s.Name }).IsUnique();
+        builder.Ignore(s => s.Levels);
 
         builder.HasOne<Company>().WithMany().HasForeignKey(s => s.CompanyId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne<SkillDomain>().WithMany().HasForeignKey(s => s.DomainId).OnDelete(DeleteBehavior.Restrict);

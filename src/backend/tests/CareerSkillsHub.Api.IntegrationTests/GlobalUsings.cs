@@ -7,6 +7,8 @@ global using CareerSkillsHub.Api.Controllers;
 global using CareerSkillsHub.Application;
 global using CareerSkillsHub.Application.Contracts.Auth;
 global using CareerSkillsHub.Application.Contracts.Companies;
+global using CareerSkillsHub.Application.Contracts.Employees;
+global using CareerSkillsHub.Application.Contracts.Organisation;
 global using CareerSkillsHub.Domain;
 global using CareerSkillsHub.Infrastructure.Persistence;
 global using CareerSkillsHub.Infrastructure.Seeding;

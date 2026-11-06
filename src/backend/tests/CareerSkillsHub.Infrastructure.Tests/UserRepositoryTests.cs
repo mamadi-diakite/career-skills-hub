@@ -34,6 +34,22 @@ public sealed class UserRepositoryTests : IDisposable
     }
 
     [Fact]
+    public async Task Lists_the_accounts_of_one_company()
+    {
+        var other = new Company("Green Valley Foods", 12, Now);
+        await using (var setup = _database.CreateContext())
+        {
+            setup.Companies.Add(other);
+            setup.Users.Add(new User(other.Id, "jade.roux@example.com", "Jade", "hash", UserRole.HrAdmin, null, Now));
+            await setup.SaveChangesAsync();
+        }
+
+        await using var db = _database.CreateContext();
+
+        Assert.Equal([_user.Id], (await new UserRepository(db).ListByCompanyAsync(_company.Id, default)).Select(u => u.Id));
+    }
+
+    [Fact]
     public async Task Adds_a_company_with_its_hr_admin_and_saves_a_changed_password()
     {
         var company = new Company("Green Valley Foods", 12, Now);

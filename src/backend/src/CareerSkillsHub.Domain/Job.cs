@@ -16,9 +16,7 @@ public sealed class Job
     {
         Id = Guid.CreateVersion7();
         CompanyId = Guard.NotEmpty(companyId, nameof(companyId));
-        DepartmentId = Guard.NotEmpty(departmentId, nameof(departmentId));
-        Title = Guard.Required(title, nameof(title), TitleMaxLength);
-        Description = Guard.Optional(description, nameof(description), DescriptionMaxLength);
+        Update(departmentId, title, description);
     }
 
     public Guid Id { get; private set; }
@@ -32,6 +30,16 @@ public sealed class Job
     public string? Description { get; private set; }
 
     public IReadOnlyCollection<JobRequiredSkill> RequiredSkills => _requiredSkills;
+
+    /// <summary>Validates every value before changing any.</summary>
+    public void Update(Guid departmentId, string title, string? description)
+    {
+        var newDepartmentId = Guard.NotEmpty(departmentId, nameof(departmentId));
+        var newTitle = Guard.Required(title, nameof(title), TitleMaxLength);
+        Description = Guard.Optional(description, nameof(description), DescriptionMaxLength);
+        DepartmentId = newDepartmentId;
+        Title = newTitle;
+    }
 
     /// <summary>Replaces the required skills, keeping the rows of skills that stay required.</summary>
     public void SetRequiredSkills(IReadOnlyCollection<RequiredSkill> requiredSkills)

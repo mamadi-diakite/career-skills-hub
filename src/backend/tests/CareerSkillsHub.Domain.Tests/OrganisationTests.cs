@@ -111,6 +111,72 @@ public sealed class OrganisationTests
     }
 
     [Fact]
+    public void Department_can_be_renamed()
+    {
+        var department = new Department(CompanyId, "Warehouse");
+
+        department.Rename(" Logistics hub ");
+
+        Assert.Equal("Logistics hub", department.Name);
+        Assert.Throws<ArgumentException>(() => department.Rename(" "));
+        Assert.Equal("Logistics hub", department.Name);
+    }
+
+    [Fact]
+    public void Skill_domain_can_be_updated_and_stays_unchanged_when_invalid()
+    {
+        var domain = new SkillDomain(CompanyId, "Safety", "Old");
+
+        domain.Update(" Health and safety ", null);
+
+        Assert.Equal(("Health and safety", (string?)null), (domain.Name, domain.Description));
+        Assert.Throws<ArgumentException>(() => domain.Update(" ", "Kept?"));
+        Assert.Throws<ArgumentException>(() => domain.Update("Safety", new string('a', SkillDomain.DescriptionMaxLength + 1)));
+        Assert.Equal(("Health and safety", (string?)null), (domain.Name, domain.Description));
+    }
+
+    [Fact]
+    public void Skill_can_be_moved_and_updated()
+    {
+        var skill = new Skill(CompanyId, Guid.NewGuid(), "Forklift driving", null, Levels);
+        var otherDomain = Guid.NewGuid();
+        var newLevels = new SkillLevelDescriptions("A", "B", "C", "D");
+
+        skill.Update(otherDomain, " Reach truck driving ", " Narrow aisles ", newLevels);
+
+        Assert.Equal((otherDomain, "Reach truck driving", "Narrow aisles"), (skill.DomainId, skill.Name, skill.Description));
+        Assert.Equal(newLevels, skill.Levels);
+    }
+
+    [Fact]
+    public void Invalid_skill_update_changes_nothing()
+    {
+        var domainId = Guid.NewGuid();
+        var skill = new Skill(CompanyId, domainId, "Forklift driving", "Kept", Levels);
+
+        Assert.Throws<ArgumentException>(() => skill.Update(Guid.Empty, "New", null, Levels));
+        Assert.Throws<ArgumentException>(() => skill.Update(Guid.NewGuid(), "New", null, Levels with { Expert = "" }));
+        Assert.Throws<ArgumentNullException>(() => skill.Update(Guid.NewGuid(), "New", null, null!));
+
+        Assert.Equal((domainId, "Forklift driving", "Kept"), (skill.DomainId, skill.Name, skill.Description));
+        Assert.Equal(Levels, skill.Levels);
+    }
+
+    [Fact]
+    public void Job_can_be_updated_and_stays_unchanged_when_invalid()
+    {
+        var job = new Job(CompanyId, Guid.NewGuid(), "Forklift operator", "Old");
+        var departmentId = Guid.NewGuid();
+
+        job.Update(departmentId, " Reach truck operator ", null);
+
+        Assert.Equal((departmentId, "Reach truck operator", (string?)null), (job.DepartmentId, job.Title, job.Description));
+        Assert.Throws<ArgumentException>(() => job.Update(Guid.Empty, "Other", "New"));
+        Assert.Throws<ArgumentException>(() => job.Update(Guid.NewGuid(), " ", "New"));
+        Assert.Equal((departmentId, "Reach truck operator", (string?)null), (job.DepartmentId, job.Title, job.Description));
+    }
+
+    [Fact]
     public void Required_skills_are_replaced_and_updated_in_place()
     {
         var job = new Job(CompanyId, Guid.NewGuid(), "Forklift operator", null);

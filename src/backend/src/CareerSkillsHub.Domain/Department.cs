@@ -21,4 +21,6 @@ public sealed class Department
     public Guid CompanyId { get; private set; }
 
     public string Name { get; private set; } = string.Empty;
+
+    public void Rename(string name) => Name = Guard.Required(name, nameof(name), NameMaxLength);
 }

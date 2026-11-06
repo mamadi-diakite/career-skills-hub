@@ -16,6 +16,15 @@ internal static class ControllerExtensions
         return controller.ValidationProblem();
     }
 
+    /// <summary>Runs <paramref name="action"/> for the signed-in user; 401 when the token carries no user id.</summary>
+    public static async Task<ActionResult> ForUserAsync<T>(
+        this ControllerBase controller,
+        Func<Guid, Task<ServiceResult<T>>> action,
+        Func<T, ActionResult>? onOk = null) =>
+        controller.User.GetUserId() is { } userId
+            ? controller.ToActionResult(await action(userId), onOk)
+            : controller.Unauthorized();
+
     /// <param name="onOk">Builds the success response; plain 200 with the value when omitted.</param>
     public static ActionResult ToActionResult<T>(
         this ControllerBase controller,

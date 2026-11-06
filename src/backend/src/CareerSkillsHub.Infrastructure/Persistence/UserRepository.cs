@@ -11,6 +11,9 @@ public sealed class UserRepository(CareerSkillsHubDbContext db) : IUserRepositor
     public Task<Company?> FindCompanyAsync(Guid id, CancellationToken cancellationToken) =>
         db.Companies.SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
 
+    public async Task<IReadOnlyList<User>> ListByCompanyAsync(Guid companyId, CancellationToken cancellationToken) =>
+        await db.Users.Where(u => u.CompanyId == companyId).ToListAsync(cancellationToken);
+
     public void Add(User user) => db.Users.Add(user);
 
     public void AddCompany(Company company) => db.Companies.Add(company);

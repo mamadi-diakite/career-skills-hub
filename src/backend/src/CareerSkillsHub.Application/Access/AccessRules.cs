@@ -3,6 +3,9 @@ namespace CareerSkillsHub.Application.Access;
 /// <summary>Who can see and change what. Every rule also requires the same company.</summary>
 public static class AccessRules
 {
+    public const string OrganisationIsManagedByHr = "Only HR admins can manage the organisation.";
+    public const string EmployeeIsNotVisible = "You can only see your own record and your team.";
+
     /// <summary>Company profile, departments, jobs and the skills framework are managed by HR only.</summary>
     public static bool CanManageOrganisation(Actor actor)
     {

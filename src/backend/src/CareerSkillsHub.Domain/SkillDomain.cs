@@ -14,8 +14,7 @@ public sealed class SkillDomain
     {
         Id = Guid.CreateVersion7();
         CompanyId = Guard.NotEmpty(companyId, nameof(companyId));
-        Name = Guard.Required(name, nameof(name), NameMaxLength);
-        Description = Guard.Optional(description, nameof(description), DescriptionMaxLength);
+        Update(name, description);
     }
 
     public Guid Id { get; private set; }
@@ -25,4 +24,11 @@ public sealed class SkillDomain
     public string Name { get; private set; } = string.Empty;
 
     public string? Description { get; private set; }
+
+    public void Update(string name, string? description)
+    {
+        var newName = Guard.Required(name, nameof(name), NameMaxLength);
+        Description = Guard.Optional(description, nameof(description), DescriptionMaxLength);
+        Name = newName;
+    }
 }

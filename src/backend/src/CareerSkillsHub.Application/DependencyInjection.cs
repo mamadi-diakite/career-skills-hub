@@ -7,6 +7,10 @@ public static class DependencyInjection
         services.AddScoped<ActorResolver>();
         services.AddScoped<AuthService>();
         services.AddScoped<CompanyService>();
+        services.AddScoped<DepartmentService>();
+        services.AddScoped<SkillFrameworkService>();
+        services.AddScoped<JobService>();
+        services.AddScoped<EmployeeService>();
 
         return services;
     }

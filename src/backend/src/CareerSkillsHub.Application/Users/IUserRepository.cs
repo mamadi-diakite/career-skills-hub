@@ -9,6 +9,8 @@ public interface IUserRepository
 
     Task<Company?> FindCompanyAsync(Guid id, CancellationToken cancellationToken);
 
+    Task<IReadOnlyList<User>> ListByCompanyAsync(Guid companyId, CancellationToken cancellationToken);
+
     void Add(User user);
 
     void AddCompany(Company company);

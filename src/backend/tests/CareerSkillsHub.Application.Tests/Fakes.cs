@@ -17,6 +17,9 @@ internal sealed class InMemoryUserRepository : IUserRepository
     public Task<Company?> FindCompanyAsync(Guid id, CancellationToken cancellationToken) =>
         Task.FromResult(Companies.SingleOrDefault(c => c.Id == id));
 
+    public Task<IReadOnlyList<User>> ListByCompanyAsync(Guid companyId, CancellationToken cancellationToken) =>
+        Task.FromResult<IReadOnlyList<User>>([.. Users.Where(u => u.CompanyId == companyId)]);
+
     public void Add(User user) => Users.Add(user);
 
     public void AddCompany(Company company) => Companies.Add(company);

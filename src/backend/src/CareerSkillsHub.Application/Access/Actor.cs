@@ -17,4 +17,21 @@ public sealed class ActorResolver(IUserRepository users)
     /// <returns><c>null</c> when the account no longer exists.</returns>
     public async Task<Actor?> FindAsync(Guid userId, CancellationToken cancellationToken = default) =>
         await users.FindByIdAsync(userId, cancellationToken) is { } user ? Actor.From(user) : null;
+
+    /// <summary>Resolves the caller and, when <paramref name="manageOrganisation"/> is set, checks they are HR.</summary>
+    /// <returns>The actor, or the failure to return when the caller is unknown or not allowed.</returns>
+    public async Task<(Actor? Actor, ServiceResult<T>? Failure)> RequireAsync<T>(
+        Guid userId,
+        bool manageOrganisation,
+        CancellationToken cancellationToken)
+    {
+        if (await FindAsync(userId, cancellationToken) is not { } actor)
+        {
+            return (null, ServiceResult<T>.Unauthorized());
+        }
+
+        return manageOrganisation && !AccessRules.CanManageOrganisation(actor)
+            ? (null, ServiceResult<T>.Forbidden(AccessRules.OrganisationIsManagedByHr))
+            : (actor, null);
+    }
 }
